@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ReadRecorder</string>
+    <string name="action_settings">Settings</string>
+    <string name="todo">TODO</string>
+    <string name="string_description">string/description</string>
+    <string name="back">Back</string>
+    <string name="bookImage">TODO</string>
+    <string name="submitButtonText">送信</string>
+</resources>
