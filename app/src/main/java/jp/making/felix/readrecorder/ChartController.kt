@@ -11,7 +11,14 @@ import com.github.mikephil.charting.data.LineDataSet
 
 class ChartController{
     private var mTypeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
-
+    /**
+     * 二つの必要な関数をまとめて呼び出してあげる関数
+     * @param lineChart setupLineChartに渡してあげるLineChartのインスタンス
+     * @param page lineDataWithCountに渡してあげる本のページのログ
+     *
+     * @see setupLineChart
+     * @see lineDataWithCount
+     */
     fun setUpChart(lineChart: LineChart,page: Array<Int>):LineData{
         setupLineChart(lineChart)
         return(lineDataWithCount(page))

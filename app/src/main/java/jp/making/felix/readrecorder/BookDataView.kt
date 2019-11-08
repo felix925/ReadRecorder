@@ -1,8 +1,6 @@
 package jp.making.felix.readrecorder
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,11 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.activity_book_data_view.*
@@ -39,7 +33,9 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         //Chartをコントロールするためのクラス
         val chartController = ChartController()
 
-
+        /**
+         * @TODO DBにパスをおいておき、それを呼び出して画像取得
+         */
         image.setImageResource(R.drawable.kotlin)
 
         //戻るボタンの戻る実装
@@ -47,10 +43,16 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
+        /**
+         * @TODO linechartのsetOnChartValueSelectedListnerをChartControlleに移植する。
+         * @TODO (this@BookDataView)部分の対処
+         */
         lineChart.setOnChartValueSelectedListener(this@BookDataView)
-        //LineChartのデータ設定と表示
+
         if(book is Books){
+            //LineChartのデータ設定と表示
             lineChart.data = chartController.setUpChart(lineChart,book.pages)
+            //チャート表示画面のテキストビューに本の名前と最終更新履歴を表示する
             bookName.setText(book.name)
             bookLog.setText(book.lastLog)
         }
@@ -61,7 +63,10 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
             startActivity(intent)
         }
     }
-    //グラフ上の座標が押された場合に出力する。
+    /**
+     * グラフの座標が押された時によばれ、何ページ読んだかをトーストで表示します。
+     * @param Entry 押された座標の情報を持つ
+     */
     override fun onValueSelected(e: Entry, h: Highlight) {
         val context = baseContext
         Toast.makeText(context,"${e.y}ページ読んでいます",Toast.LENGTH_SHORT).show()
