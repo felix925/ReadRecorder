@@ -16,7 +16,10 @@ class ChartController{
         setupLineChart(lineChart)
         return(lineDataWithCount(page))
     }
-
+    /**
+    * LineChartの初期化
+    * @param lineChart 初期化するLineChartのインスタンス
+    */
     private fun setupLineChart(lineChart: LineChart){
         lineChart.apply {
             description.isEnabled = false
@@ -56,6 +59,12 @@ class ChartController{
             }
         }
     }
+
+    /**
+     * 渡されたデータをもとにグラフを作成する関数です。
+     * @param page 本のページのログ(本来だとここはグラフにしたいデータが入る)
+     * @return この関数によって作成されたグラフのデータが返される。
+     */
     private fun lineDataWithCount(page:Array<Int>): LineData {
         val values = mutableListOf<Entry>()
         var j = 0
