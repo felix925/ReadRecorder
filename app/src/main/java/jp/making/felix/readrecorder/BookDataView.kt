@@ -44,7 +44,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
             startActivity(intent)
         }
         /**
-         * @TODO linechartのsetOnChartValueSelectedListnerをChartControlleに移植する。
+         * @TODO linechartのsetOnChartValueSelectedListenerをChartControllerに移植する。
          * @TODO (this@BookDataView)部分の対処
          */
         lineChart.setOnChartValueSelectedListener(this@BookDataView)
