@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -13,7 +12,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.activity_book_data_view.*
-import kotlinx.android.synthetic.main.activity_read_data_regist.*
 
 class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
 
@@ -54,7 +52,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         if(book is Book){
             //LineChartのデータ設定と表示
             val pageData = mutableListOf<Int>()
-            for(i in book.pages){
+            for(i in book.pages) {
                 pageData.add(i)
             }
             lineChart.data = chartController.setUpChart(lineChart,pageData.toTypedArray())
@@ -87,7 +85,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         super.onActivityResult(requestCode, resultCode, data)
         setContentView(R.layout.activity_book_data_view)
         //メインアクティビティから渡したデータの取得
-        val book = intent.getSerializableExtra("book")
+        val book = intent.extras?.getSerializable("book")
         //lineChartの呼び出し
         val lineChart = findViewById<LineChart>(R.id.line_chart)
         //本のイメージビューの取得
@@ -106,7 +104,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
 
         //戻るボタンの戻る実装
         backButton.setOnClickListener { view ->
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         /**
@@ -114,24 +112,27 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
          * @TODO (this@BookDataView)部分の対処
          */
         lineChart.setOnChartValueSelectedListener(this@BookDataView)
-
-        if(book is Book){
-            //LineChartのデータ設定と表示
-            val pageData = mutableListOf<Int>()
-            for(i in book.pages){
-                pageData.add(i)
+        book?.apply {
+            if (this is Book) {
+                //LineChartのデータ設定と表示
+                val pageData = mutableListOf<Int>()
+                for (i in this.pages) {
+                    pageData.add(i)
+                }
+                lineChart.data = chartController.setUpChart(lineChart, pageData.toTypedArray())
+                //チャート表示画面のテキストビューに本の名前と最終更新履歴を表示する
+                bookName.setText(this.name)
+                bookLog.setText(this.lastLog)
             }
-            lineChart.data = chartController.setUpChart(lineChart,pageData.toTypedArray())
-            //チャート表示画面のテキストビューに本の名前と最終更新履歴を表示する
-            bookName.setText(book.name)
-            bookLog.setText(book.lastLog)
         }
 
-        addButton.setOnClickListener{view ->
-            val intent = Intent(this,ReadDataRegist::class.java)
-            intent.putExtra("book",book)
+        addButton.setOnClickListener { view ->
+            val intent = Intent(this, ReadDataRegist::class.java)
+            book?.apply {
+                intent.putExtra("book", this)
+            }
             val requestCode = 1000
-            startActivityForResult(intent,requestCode)
+            startActivityForResult(intent, requestCode)
         }
     }
 }

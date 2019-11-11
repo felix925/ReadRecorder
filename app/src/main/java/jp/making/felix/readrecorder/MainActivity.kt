@@ -2,7 +2,6 @@ package jp.making.felix.readrecorder
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -26,9 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         Realm.init(this)
         val rcon = RealmController()
-        val mRealm = Realm.getDefaultInstance()
-        val rdata = rcon.readData(mRealm)
-
+        RealmController.setRealm(Realm.getDefaultInstance())
+        val rdata = rcon.readData()
         listView.adapter = UserAdapter(this, rdata)
         listView.setOnItemClickListener { parent, view, position, id ->
             //本の情報を受け渡すためにstringのリストで渡す
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         fab.setOnClickListener { view ->
-            rcon.createData("kotlin", "hoge", mRealm)
+            rcon.createData("kotlin", "hoge")
             listView.adapter = UserAdapter(this, rdata)
         }
     }

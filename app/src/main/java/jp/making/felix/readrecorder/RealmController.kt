@@ -6,7 +6,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class RealmController{
-    fun createData(name: String,imageUrl: String,mRealm:Realm){
+    companion object {
+        private lateinit var mRealm:Realm
+        fun setRealm(realm: Realm){
+            this.mRealm = realm
+        }
+    }
+    fun createData(name: String,imageUrl: String){
         mRealm.executeTransaction{
             val bookData = mRealm.createObject(Books::class.java,UUID.randomUUID().toString())
             bookData.name = name
@@ -16,15 +22,15 @@ class RealmController{
         }
     }
 
-    fun readData(mRealm: Realm):RealmResults<Books>{
+    fun readData():RealmResults<Books>{
         return mRealm.where(Books::class.java).findAll()
     }
 
-    fun findData(id:String,mRealm: Realm):Books?{
+    fun findData(id:String):Books?{
         return mRealm.where(Books::class.java).equalTo("id",id).findFirst()
     }
 
-    fun updateData(id: String,page:Int,mRealm: Realm){
+    fun updateData(id: String,page:Int){
         mRealm.executeTransaction{
             val book = mRealm.where(Books::class.java).equalTo("id",id).findFirst()
             book?.apply {
