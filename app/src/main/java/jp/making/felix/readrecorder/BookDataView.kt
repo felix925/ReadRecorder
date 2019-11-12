@@ -21,7 +21,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         //本のデータを表示する画面の呼び出し
         setContentView(R.layout.activity_book_data_view)
         //メインアクティビティから渡したデータの取得
-        val book = intent.getSerializableExtra("book")
+        val bookId = intent.getStringExtra("bookId")
         //lineChartの呼び出し
         val lineChart = findViewById<LineChart>(R.id.line_chart)
         //本のイメージビューの取得
@@ -32,6 +32,11 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         val bookLog = findViewById<TextView>(R.id.bookLog)
         //Chartをコントロールするためのクラス
         val chartController = ChartController()
+        //本の情報をデータベースから取るためのコントローラーのインスタンス化
+        val rcon = RealmController()
+        //本のデータをデータベースから取得する
+        // （この際、画面遷移を行えている時点で、idは渡せているのでエルビス演算子を使っている）
+        val bookData = rcon.findData(bookId!!)
 
         /**
          * @TODO DBにパスをおいておき、それを呼び出して画像取得
@@ -48,22 +53,19 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
          * @TODO (this@BookDataView)部分の対処
          */
         lineChart.setOnChartValueSelectedListener(this@BookDataView)
-
-        if(book is Book){
-            //LineChartのデータ設定と表示
-            val pageData = mutableListOf<Int>()
-            for(i in book.pages) {
-                pageData.add(i)
+        bookData?.apply {
+            bookName.text = bookData.name
+            bookLog.text = bookData.lastLog
+            val list = mutableListOf<Int>()
+            for (i in bookData.pages) {
+                list.add(i.pageData)
             }
-            lineChart.data = chartController.setUpChart(lineChart,pageData.toTypedArray())
-            //チャート表示画面のテキストビューに本の名前と最終更新履歴を表示する
-            bookName.setText(book.name)
-            bookLog.setText(book.lastLog)
+            lineChart.data = chartController.setUpChart(lineChart,list.toTypedArray())
         }
-
+        //ページを追加するためのボタン
         addButton.setOnClickListener{view ->
             val intent = Intent(this,ReadDataRegist::class.java)
-            intent.putExtra("book",book)
+            intent.putExtra("bookId",bookId)
             val requestCode = 1000
             startActivityForResult(intent,requestCode)
         }
@@ -79,60 +81,5 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
 
     override fun onNothingSelected() {
         Log.i("Nothing selected", "Nothing selected.")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        setContentView(R.layout.activity_book_data_view)
-        //メインアクティビティから渡したデータの取得
-        val book = intent.extras?.getSerializable("book")
-        //lineChartの呼び出し
-        val lineChart = findViewById<LineChart>(R.id.line_chart)
-        //本のイメージビューの取得
-        val image = findViewById<ImageView>(R.id.imageView)
-        //本の名前表示のためのテキストビュー取得
-        val bookName = findViewById<TextView>(R.id.bookName)
-        //本のログ表示のためのテキストビュー取得
-        val bookLog = findViewById<TextView>(R.id.bookLog)
-        //Chartをコントロールするためのクラス
-        val chartController = ChartController()
-
-        /**
-         * @TODO DBにパスをおいておき、それを呼び出して画像取得
-         */
-        image.setImageResource(R.drawable.kotlin)
-
-        //戻るボタンの戻る実装
-        backButton.setOnClickListener { view ->
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-        /**
-         * @TODO linechartのsetOnChartValueSelectedListenerをChartControllerに移植する。
-         * @TODO (this@BookDataView)部分の対処
-         */
-        lineChart.setOnChartValueSelectedListener(this@BookDataView)
-        book?.apply {
-            if (this is Book) {
-                //LineChartのデータ設定と表示
-                val pageData = mutableListOf<Int>()
-                for (i in this.pages) {
-                    pageData.add(i)
-                }
-                lineChart.data = chartController.setUpChart(lineChart, pageData.toTypedArray())
-                //チャート表示画面のテキストビューに本の名前と最終更新履歴を表示する
-                bookName.setText(this.name)
-                bookLog.setText(this.lastLog)
-            }
-        }
-
-        addButton.setOnClickListener { view ->
-            val intent = Intent(this, ReadDataRegist::class.java)
-            book?.apply {
-                intent.putExtra("book", this)
-            }
-            val requestCode = 1000
-            startActivityForResult(intent, requestCode)
-        }
     }
 }

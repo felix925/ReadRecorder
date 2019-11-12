@@ -7,15 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.Serializable
-
-data class Book(
-    var id: String,
-    var name: String,
-    var imageUrl: String,
-    var lastLog: String,
-    var pages: Array<Int>
-):Serializable
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,17 +23,13 @@ class MainActivity : AppCompatActivity() {
             //本の情報を受け渡すためにstringのリストで渡す
             val intent = Intent(this, BookDataView::class.java)
             rdata[position]?.apply {
-                val list = mutableListOf<Int>()
-                for(i in this.pages){
-                    list.add(i.pageData)
-                }
-                intent.putExtra("book",Book(this.id,this.name,this.imageUrl,this.lastLog,list.toTypedArray()))
+                intent.putExtra("bookId",this.id)
             }
             startActivity(intent)
         }
         fab.setOnClickListener { view ->
-            rcon.createData("kotlin", "hoge")
-            listView.adapter = UserAdapter(this, rdata)
+            val intent = Intent(this, BookRegist::class.java)
+            startActivity(intent)
         }
     }
 

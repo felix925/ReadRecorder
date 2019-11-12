@@ -16,19 +16,18 @@ class ReadDataRegist : AppCompatActivity() {
         setContentView(R.layout.activity_read_data_regist)
         val titleText = findViewById<TextView>(R.id.titleText)
         val intent =intent
-        val book = intent.getSerializableExtra("book")
+        val bookId = intent.getStringExtra("bookId")
         titleText.text = "何ページまで読んだかを入力してください。"
+        val rcon = RealmController()
+        val bookData = rcon.findData(bookId)
         submitButton.setOnClickListener{view ->
-            Log.i("ReadData_submit","here!!!!")
             val intentSub = Intent(this,BookDataView::class.java)
             val pages = findViewById<EditText>(R.id.pageValue)
             val pageValue = pages.getText()
-            if(book is Book){
-                book.pages
-                intentSub.putExtra("book",book)
-                Log.i("ReadData_book",book.toString())
+            bookId?.apply {
+                rcon.updateData(bookId, pageValue.toString().toInt())
             }
-            setResult(Activity.RESULT_OK,intentSub)
+            intentSub.putExtra("bookId",bookId)
             startActivity(intentSub)
         }
 

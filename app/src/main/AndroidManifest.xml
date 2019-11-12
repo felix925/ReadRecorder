@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReadDataRegist"></activity>
+        <activity android:name=".BookRegist"></activity>
+        <activity android:name=".ReadDataRegist" />
         <activity android:name=".BookAddRecord" />
         <activity android:name=".bookAddRecord" />
         <activity android:name=".BookDataView" />
-        <activity android:name=".BookRegist" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
