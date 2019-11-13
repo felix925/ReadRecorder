@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         Realm.init(this)
         val rcon = RealmController()
-        RealmController.setRealm(Realm.getDefaultInstance())
+        //RealmController.setRealm(Realm.getDefaultInstance())
         val rdata = rcon.readData()
         listView.adapter = UserAdapter(this, rdata)
         listView.setOnItemClickListener { parent, view, position, id ->

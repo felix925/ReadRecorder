@@ -6,12 +6,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class RealmController{
-    companion object {
-        private lateinit var mRealm:Realm
-        fun setRealm(realm: Realm){
-            this.mRealm = realm
-        }
-    }
+    private val mRealm:Realm = Realm.getDefaultInstance()
+
     fun createData(name: String,imageUrl: String){
         mRealm.executeTransaction{
             val bookData = mRealm.createObject(Books::class.java,UUID.randomUUID().toString())
