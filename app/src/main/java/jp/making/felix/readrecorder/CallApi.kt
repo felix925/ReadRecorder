@@ -2,7 +2,6 @@ package jp.making.felix.readrecorder
 
 import android.util.Log
 import okhttp3.*
-import org.json.JSONObject
 import java.io.IOException
 
 class CallApi{

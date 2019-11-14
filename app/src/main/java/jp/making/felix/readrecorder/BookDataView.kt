@@ -12,6 +12,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.activity_book_data_view.*
+import com.squareup.picasso.Picasso
+
 
 class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
 
@@ -47,6 +49,9 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
+
+
+
         /**
          * @TODO linechartのsetOnChartValueSelectedListenerをChartControllerに移植する。
          * @TODO (this@BookDataView)部分の対処
@@ -55,6 +60,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         bookData?.apply {
             bookName.text = bookData.name
             bookLog.text = bookData.lastLog
+            getImage(imageUrl,image)
             val list = mutableListOf<Int>()
             for (i in bookData.pages) {
                 list.add(i.pageData)
@@ -80,5 +86,8 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
 
     override fun onNothingSelected() {
         Log.i("Nothing selected", "Nothing selected.")
+    }
+    fun getImage(url:String,image:ImageView){
+        Picasso.get().load(url).into(image)
     }
 }

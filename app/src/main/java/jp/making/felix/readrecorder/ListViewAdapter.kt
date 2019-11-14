@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.PicassoProvider
 import kotlinx.android.synthetic.main.book_item.view.*
 
 class UserAdapter(val context: Context, val users: List<Books>): BaseAdapter() {
