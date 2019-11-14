@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.making.felix.readrecorder">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BookRegist"></activity>
+        <activity android:name=".BookRegist"/>
         <activity android:name=".ReadDataRegist" />
-        <activity android:name=".BookAddRecord" />
-        <activity android:name=".bookAddRecord" />
         <activity android:name=".BookDataView" />
         <activity
             android:name=".MainActivity"
@@ -25,5 +25,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>

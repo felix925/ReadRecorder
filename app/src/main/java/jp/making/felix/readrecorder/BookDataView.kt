@@ -41,7 +41,6 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         /**
          * @TODO DBにパスをおいておき、それを呼び出して画像取得
          */
-        image.setImageResource(R.drawable.kotlin)
 
         //戻るボタンの戻る実装
         backButton.setOnClickListener { view ->
