@@ -27,6 +27,7 @@ class CallApi{
         })
     }
     private fun registBook(res:String,title:String){
+        Log.i("REGIST","HERE")
         val rcon = RealmController()
         rcon.createData(title,res)
     }

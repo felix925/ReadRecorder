@@ -17,16 +17,22 @@ class ReadDataRegist : AppCompatActivity() {
         val bookId = intent.getStringExtra("bookId")
         titleText.text = "何ページまで読んだかを入力してください。"
         val rcon = RealmController()
-        val bookData = rcon.findData(bookId)
+        var lastPage = 0
+        bookId?.apply {
+            rcon.findData(bookId)?.pages?.last()?.apply {
+                lastPage = this.pageData
+            }
+
+        }
         submitButton.setOnClickListener{view ->
             val intentSub = Intent(this,BookDataView::class.java)
             val pages = findViewById<EditText>(R.id.pageValue)
-            val pageValue = pages.getText()
-            bookId?.apply {
-                rcon.updateData(bookId, pageValue.toString().toInt())
+            val pageValue = pages.getText().toString().toInt()
+            if(pageValue >= lastPage) {
+                rcon.updateData(bookId, pageValue)
+                intentSub.putExtra("bookId", bookId)
+                startActivity(intentSub)
             }
-            intentSub.putExtra("bookId",bookId)
-            startActivity(intentSub)
         }
 
     }

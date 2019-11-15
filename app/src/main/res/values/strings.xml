@@ -5,5 +5,5 @@
     <string name="string_description">string/description</string>
     <string name="back">Back</string>
     <string name="bookImage">TODO</string>
-    <string name="submitButtonText">送信</string>
+    <string name="submitButtonText">読んだ</string>
 </resources>

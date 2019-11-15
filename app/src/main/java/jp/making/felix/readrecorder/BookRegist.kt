@@ -17,8 +17,10 @@ class BookRegist : AppCompatActivity() {
             if(editText.text.isNotEmpty()){
                 val api = CallApi()
                 api.call(editText.text.toString())
+                Thread.sleep(1000)
+                startActivity(intent)
             }
-            startActivity(intent)
+
         }
     }
 }
