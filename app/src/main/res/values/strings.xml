@@ -6,4 +6,5 @@
     <string name="back">Back</string>
     <string name="bookImage">TODO</string>
     <string name="submitButtonText">読んだ</string>
+    <string name="registText">登録</string>
 </resources>

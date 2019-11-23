@@ -15,8 +15,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         Realm.init(this)
-        val rcon = RealmController()
-        val rdata = rcon.readData()
+        val rdata = RealmController.readData()
         listView.adapter = UserAdapter(this, rdata)
         listView.setOnItemClickListener { parent, view, position, id ->
             //本の情報を受け渡すためにstringのリストで渡す

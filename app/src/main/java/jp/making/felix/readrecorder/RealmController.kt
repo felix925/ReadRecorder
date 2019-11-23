@@ -5,8 +5,9 @@ import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RealmController{
-    private val mRealm:Realm = Realm.getDefaultInstance()
+object RealmController{
+    //RealmObjectをプライベートにして関数越しでしかアクセスできないようにしている
+    private val mRealm: Realm = Realm.getDefaultInstance()
 
     fun createData(name: String,imageUrl: String){
         mRealm.executeTransaction{

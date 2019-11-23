@@ -1,5 +1,6 @@
 package jp.making.felix.readrecorder
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -34,15 +35,12 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         val bookLog = findViewById<TextView>(R.id.bookLog)
         //Chartをコントロールするためのクラス
         val chartController = ChartController()
-        //本の情報をデータベースから取るためのコントローラーのインスタンス化
-        val rcon = RealmController()
         //本のデータをデータベースから取得する
         // （この際、画面遷移を行えている時点で、idは渡せているのでエルビス演算子を使っている）
-        val bookData = rcon.findData(bookId!!)
-
         /**
-         * @TODO DBにパスをおいておき、それを呼び出して画像取得
-         */
+         * @see RealmController
+         * */
+        val bookData = RealmController.findData(bookId!!)
 
         //戻るボタンの戻る実装
         backButton.setOnClickListener { view ->
@@ -58,9 +56,11 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
          */
         lineChart.setOnChartValueSelectedListener(this@BookDataView)
         bookData?.apply {
-            bookName.text = bookData.name
-            bookLog.text = bookData.lastLog
-            getImage(imageUrl,image)
+            bookName.text = this.name
+            bookLog.text = lastUpdate(this.lastLog)
+            if(imageUrl.isNotEmpty()) {
+                getImage(imageUrl, image)
+            }
             val list = mutableListOf<Int>()
             for (i in bookData.pages) {
                 list.add(i.pageData)
@@ -89,5 +89,8 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
     }
     fun getImage(url:String,image:ImageView){
         Picasso.get().load(url).into(image)
+    }
+    fun lastUpdate(text:String):String{
+        return "最終更新は" + text + "です。"
     }
 }

@@ -28,7 +28,9 @@ class UserAdapter(val context: Context, val users: List<Books>): BaseAdapter() {
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = layoutInflater.inflate(R.layout.book_item, parent, false)
-        Picasso.get().load(users[position].imageUrl).into(view.thumbnail)
+        if(users[position].imageUrl.isNotEmpty()) {
+            Picasso.get().load(users[position].imageUrl).into(view.thumbnail)
+        }
         view.name.text = users[position].name
         view.comment.text = users[position].lastLog
         return view
