@@ -11,3 +11,4 @@ DBに関してはDAOを作成することにした。
 
 2019/11/24 21:20追記
 Jetbrains社のarchitecture-samples(blueprints)を参考にして、簡易化したMVPを実装する。
+アーキテクチャ導入後に同じ本は登録できないように弾くよう修正する。
