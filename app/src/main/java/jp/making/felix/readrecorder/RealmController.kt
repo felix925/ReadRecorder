@@ -2,6 +2,7 @@ package jp.making.felix.readrecorder
 
 import io.realm.Realm
 import io.realm.RealmResults
+import jp.making.felix.readrecorder.data.local.Books
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +24,7 @@ object RealmController{
         return mRealm.where(Books::class.java).findAll()
     }
 
-    fun findData(id:String):Books?{
+    fun findData(id:String): Books?{
         return mRealm.where(Books::class.java).equalTo("id",id).findFirst()
     }
 

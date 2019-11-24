@@ -8,3 +8,6 @@
 2019/11/23 22:32追記
 アーキテクチャに関して今回は MVP(ModelViewPresenter)を採用して作成し、
 DBに関してはDAOを作成することにした。
+
+2019/11/24 21:20追記
+Jetbrains社のarchitecture-samples(blueprints)を参考にして、簡易化したMVPを実装する。
