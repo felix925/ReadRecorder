@@ -1,10 +1,9 @@
-package jp.making.felix.readrecorder.data.local
+package jp.making.felix.readrecorder
 
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
-import jp.making.felix.readrecorder.Page
 import java.io.Serializable
 
 open class Books:RealmObject(),Serializable{
@@ -14,7 +13,5 @@ open class Books:RealmObject(),Serializable{
     var name: String = ""
     var imageUrl: String = ""
     var lastLog: String = ""
-    var pages: RealmList<Page> = RealmList(
-        Page(0)
-    )
+    var pages: RealmList<Page> = RealmList(Page(0))
 }

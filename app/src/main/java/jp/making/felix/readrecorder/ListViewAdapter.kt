@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.squareup.picasso.Picasso
-import jp.making.felix.readrecorder.data.local.Books
 import kotlinx.android.synthetic.main.book_item.view.*
 
 class UserAdapter(val context: Context, val users: List<Books>): BaseAdapter() {
@@ -18,7 +17,7 @@ class UserAdapter(val context: Context, val users: List<Books>): BaseAdapter() {
         return users.count()
     }
 
-    override fun getItem(position: Int): Books {
+    override fun getItem(position: Int):Books {
         return users[position]
     }
 
