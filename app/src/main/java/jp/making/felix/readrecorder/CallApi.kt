@@ -1,6 +1,7 @@
 package jp.making.felix.readrecorder
 
 import android.util.Log
+import jp.making.felix.readrecorder.RealmController.Companion.rcon
 import okhttp3.*
 import java.io.IOException
 import java.lang.IndexOutOfBoundsException
@@ -49,6 +50,6 @@ class CallApi{
      * */
     private fun registBook(res:String,title:String){
         Log.i("REGIST","HERE")
-        RealmController.createData(title,res)
+        rcon.createData(title,res)
     }
 }

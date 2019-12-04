@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import io.realm.Realm
+import jp.making.felix.readrecorder.RealmController.Companion.rcon
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         Realm.init(this)
-        val rdata = RealmController.readData()
+
+        val rdata = rcon.readData()
         listView.adapter = UserAdapter(this, rdata)
         listView.setOnItemClickListener { parent, view, position, id ->
             //本の情報を受け渡すためにstringのリストで渡す

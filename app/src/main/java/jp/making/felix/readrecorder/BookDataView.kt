@@ -14,6 +14,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.activity_book_data_view.*
 import com.squareup.picasso.Picasso
+import jp.making.felix.readrecorder.RealmController.Companion.rcon
 
 
 class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
@@ -40,7 +41,7 @@ class BookDataView : AppCompatActivity(), OnChartValueSelectedListener {
         /**
          * @see RealmController
          * */
-        val bookData = RealmController.findData(bookId!!)
+        val bookData = rcon.findData(bookId!!)
 
         //戻るボタンの戻る実装
         backButton.setOnClickListener { view ->

@@ -16,10 +16,11 @@ class ReadDataRegist : AppCompatActivity() {
         val titleText = findViewById<TextView>(R.id.titleText)
         val intent =intent
         val bookId = intent.getStringExtra("bookId")
+        val rcon = RealmController()
         titleText.text = "何ページまで読んだかを入力してください。"
         var lastPage = 0
         bookId?.apply {
-            RealmController.findData(bookId)?.pages?.last()?.apply {
+            rcon.findData(bookId)?.pages?.last()?.apply {
                 lastPage = this.pageData
             }
         }
@@ -29,7 +30,7 @@ class ReadDataRegist : AppCompatActivity() {
             val pageValue = pages.getText().toString().toInt()
             if(pageValue >= lastPage) {
                 bookId?.apply {
-                    RealmController.updateData(bookId, pageValue)
+                    rcon.updateData(bookId, pageValue)
                     intentSub.putExtra("bookId", bookId)
                     startActivity(intentSub)
                 }
